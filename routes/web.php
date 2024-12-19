@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::resource('movies', MoviesController::class);
 Route::get('/home',[MoviesController::class, 'index'])->name('home');
 //Route::get('/movies/{movie}','MoviesController@show')->name('movies.show');
