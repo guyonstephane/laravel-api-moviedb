@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\CountryController;
 
 use App\Http\Controllers\MoviesController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+
+
 Route::resource('movies', MoviesController::class);
+
+
+Route::get('/acteur',[MoviesController::class, 'acteur'])->name('acteur');
 Route::get('/home',[MoviesController::class, 'index'])->name('home');
 //Route::get('/movies/{movie}','MoviesController@show')->name('movies.show');

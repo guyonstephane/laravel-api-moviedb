@@ -86,54 +86,74 @@
 
 <main>
 
-  
+<div class="container mt-4 mb-2">
+  <div class="row text-center align-items-center t-20">
+    <div class="col mb-2">
+        <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$movie['poster_path'] }}" >
+    </div>
+    <div class="col align-items-center mb-2">
+        <h2 class="card-header mb-2"> {{ $movie['title'] }}</h2>
+        {{ $movie['overview'] }}
+        <div class="card-header text-white bg-primary mt-4">
+                       Genre
+                    
+                    </div>
+                    <div class="card" >
+                        <ul class="list-group list-group-flush">
+                        @foreach($movie['genres'] as $genre)
 
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <h4>Films les plus populaires</h4></p>
+                            <p>{{ $genre['name'] }}</p>
+                        @endforeach
+                        </ul>
+                    </div>
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      @foreach($popularMovies as $movie)  
-      <div class="col">
-          <div class="card shadow-sm">
-          <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
-            <div class="card-body lh-sm">
-            
-              <p class="card-text lh-sm">
-                <a href="{{ route('movies.show',$movie['id']) }}">
-                  <strong>{{ $movie['title'] }}</strong>
-                </a>
-              </p>
-              @foreach($movie['genre_ids'] as $genre)
-                {{ $genres->get($genre) }}
-              @endforeach
-             
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                   <a href="{{ route('movies.show',$movie['id']) }}">
-                    View
-                   </a>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
     </div>
   </div>
+</div>
+</div>
+</div>
+
+
+    <section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-3 text-primary">Principaux acteurs</h2>
+            </div>
+          @foreach(array_slice($acteurs,0,8) as $acteur)
+            <div class="col-md-6 col-lg-3">
+                <div class="card my-6">
+
+                    <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$acteur['profile_path'] }}" class="card-image-top" alt="thumbnail">
+
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#" class="text-secondary">{{ $acteur['name'] }}</a></h5>
+                        
+                        <a href="{{route('acteur', ['id' => $acteur['id'] ]) }}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+          @endforeach
+          </div>
+     </div>
+</section>
+
 
 </main>
+
+
+  
+
+
+
+
 
 <footer class="text-body-secondary py-5">
   <div class="container">
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
+   
   </div>
 </footer>
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
