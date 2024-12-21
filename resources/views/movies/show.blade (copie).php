@@ -120,8 +120,8 @@
             <div class="col-12">
                 <h2 class="mb-3 text-primary">Principaux acteurs</h2>
             </div>
-          @foreach($items as $acteur)
-          <div class="col-md-6 col-lg-3">
+          @foreach(array_slice($acteurs,0,8) as $acteur)
+            <div class="col-md-6 col-lg-3">
                 <div class="card my-6">
 
                     <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$acteur['profile_path'] }}" class="card-image-top" alt="thumbnail">
@@ -135,7 +135,6 @@
             </div>
           @endforeach
           </div>
-          {{ $items->links() }}
      </div>
 </section>
 

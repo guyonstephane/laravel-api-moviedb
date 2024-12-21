@@ -73,7 +73,7 @@
   </div>
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
+      <a href="/movies" class="navbar-brand d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <strong>Films</strong>
       </a>
@@ -110,26 +110,28 @@
 
 
 <section class="bg-light py-4 my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="mb-3 text-primary">Principaux acteurs</h2>
+    <div class="container ">
+        <div class="row equal-height-row d-flex flex-wrap">
+            <div class="col-12 d-flex flex-column justify-content-between">
+                <h2 class="mb-3 text-primary">Principaux films</h2>
             </div>
-          @foreach(array_slice($acteurFilm,0,8) as $film)
-            <div class="col-md-6 col-lg-3">
+          @foreach($items as $film)
+            <div class="col-md-6 col-lg-3 row equal-height-row 
+                    d-flex flex-wrap mb-2">
                 <div class="card my-6">
 
                     <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$film['poster_path'] }}" class="card-image-top" alt="thumbnail">
 
                     <div class="card-body">
-                        <h5 class="card-title"><a href="#" class="text-secondary">{{ $film['original_title'] }}</a></h5>
-                        
-                        <a href="{{ route('movies.show',$film['id']) }}" class="btn btn-primary">Read More</a>
-                    </div>
+                    @isset($film['original_title'])
+                        <h6 class="card-title"><a href="{{ route('movies.show',$film['id']) }}" class="text-secondary">{{ $film['original_title'] }}</a></h6>
+                    @endif
+                      </div>
                 </div>
             </div>
-    @endforeach
-          </div>
+          @endforeach
+        </div>
+        {{ $items->links() }}
      </div>
 </section>
 
