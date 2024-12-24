@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::resource('movies', MoviesController::class);
 
 
-Route::get('/acteur',[MoviesController::class, 'acteur'])->name('acteur');
-Route::get('/home',[MoviesController::class, 'index'])->name('home');
+Route::get('/acteurs',[MoviesController::class, 'acteurs'])->name('acteurs');
+Route::get('/showActeur/{id}',[MoviesController::class, 'showActeur'])->name('showActeur');
+
+Route::get('/',[MoviesController::class, 'index'])->name('home');
 //Route::get('/movies/{movie}','MoviesController@show')->name('movies.show');

@@ -53,101 +53,80 @@
 
     
 <header data-bs-theme="dark">
-  <div class="collapse text-bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4>About</h4>
-          <p class="text-body-secondary">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="/movies" class="navbar-brand d-flex align-items-center">
+      <a href="/movies" class="navbar-brand d-flex align-items-left">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <strong>Films</strong>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      
+        <div class="form-group">
+          <form action="/movies" id="search-moviess"  method="get">
+            <input type="search" class="form-control input-thick-border  ml-4" id="test" placeholder="Search movies." name="query">
+          </form>
+         </div>
+
+         
+         
+      </div>
+
     </div>
   </div>
 </header>
 
 <main>
 
-<div class="container mt-4 mb-2">
-  <div class="row text-center align-items-center t-20">
-    <div class="col mb-2">
-        <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$acteurInfo['profile_path'] }} " >
-    </div>
-    <div class="col align-items-center mb-2">
-        <h2 class="card-header mb-2"> {{ $acteurInfo['name'] }}</h2>
-                <div class="card-header text-white bg-primary mt-4">
-                      Biographie
-                    
-                    </div>
-                    <div class="card" >
-                        <p>{{ $acteurInfo['biography'] }}</p>
-                        
-                    </div>
-
-    </div>
-  </div>
-</div>
-</div>
-</div>
-
-
-<section class="bg-light py-4 my-5">
-    <div class="container ">
-        <div class="row equal-height-row d-flex flex-wrap">
-            <div class="col-12 d-flex flex-column justify-content-between">
-                <h2 class="mb-3 text-primary">Principaux films</h2>
-            </div>
-          @foreach(array_slice($acteurFilm,0,8) as $film)
-            <div class="col-md-6 col-lg-3 row equal-height-row 
-                    d-flex flex-wrap mb-2">
-                <div class="card my-6">
-
-                    <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$film['poster_path'] }}" class="card-image-top" alt="thumbnail">
-
-                    <div class="card-body">
-                        <h6 class="card-title"><a href="{{ route('movies.show',$film['id']) }}" class="text-secondary">{{ $film['original_title'] }}</a></h6>
-                    </div>
-                </div>
-            </div>
-          @endforeach
-        </div>
-     </div>
-</section>
-
-
-</main>
 
 
   
 
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h4>Films les plus populaires</h4></p>
 
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      @foreach($popularMovies as $movie)  
+      <div class="col">
+          <div class="card shadow-sm">
+          <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
+            <div class="card-body lh-sm">
+            
+              <p class="card-text lh-sm">
+                <a href="{{ route('movies.show',$movie['id']) }}">
+                  <strong>{{ $movie['title'] }}</strong>
+                </a>
+              </p>
+              @foreach($movie['genre_ids'] as $genre)
+                {{ $genres->get($genre) }}
+              @endforeach
+             
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                   <a href="{{ route('movies.show',$movie['id']) }}">
+                    View
+                   </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
 
-
+</main>
 
 <footer class="text-body-secondary py-5">
   <div class="container">
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-   
+    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

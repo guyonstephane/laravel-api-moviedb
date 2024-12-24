@@ -11,14 +11,27 @@ class MoviesController extends Controller
 {
     
 
-    public function index() {
+    public function index(Request $request) {
 
-        $popularMovies = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/movie/popular')
-            ->json()['results'];
+        if (isset($request->query) & !empty($request->get('query')))
+        {
+            $word = $request->get('query');
+            $popularMovies = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/search/movie?query='.$word.'&page=1')
+                ->json()['results'];
+        }
+
+
+        else
+        {
+            $popularMovies = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/movie/popular?language=fr-FR')
+                ->json()['results'];
+        }
+        //dump($popularMovies);
 
         $genreMovie = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->get('https://api.themoviedb.org/3/genre/movie/list?language=fr-FR')
             ->json()['genres'];    
 
         $genres = collect($genreMovie)->mapWithKeys(function ($genre){
@@ -26,7 +39,7 @@ class MoviesController extends Controller
 
         });
 
-        //dump($genres) ;
+        //dump($key) ;
             
         
         return view('movies.index', compact('popularMovies','genres'));
@@ -35,13 +48,13 @@ class MoviesController extends Controller
 public function show(Request $request,$id)
     {
     $movie = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3//movie/'.$id)
+            ->get('https://api.themoviedb.org/3//movie/'.$id.'?language=fr-FR')
             ->json();  
 
             //dump($movie);
 
     $acteurs = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3//movie/'.$id.'/credits')
+        ->get('https://api.themoviedb.org/3//movie/'.$id.'/credits?language=fr-FR')
         ->json()['cast'];
 
     //$act = collect($acteurs);
@@ -61,13 +74,39 @@ public function show(Request $request,$id)
         return view('movies.show', compact('movie','items'));
 }
 
-public function acteur(Request $request){
+public function acteurs(Request $request){
 
-    $id = $request->id;
-    $page = $request->page;
     
+    if (isset($request->query) & !empty($request->get('query')))
+        {
+            $word = $request->get('query');
+            $popularActeurs = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/search/person?query='.$word.'&page=1')
+                ->json()['results'];
+        }
+
+        /*
+        $currentPage = Paginator::resolveCurrentPage();
+        $col = collect($acteurFilm);
+        $perPage = 8;
+        $currentPageItems = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $items = new Paginator($currentPageItems, count($col), $perPage);
+        $items->setPath($request->url());
+        $items->appends($request->all());
+       */
+    
+        //dump($acteurFilm);
+
+
+    return View('movies.acteur', compact('popularActeurs'));
+
+}
+
+public function showActeur( Request $request,$id){
+
+        
     $acteurInfo = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/person/'.$id)
+        ->get('https://api.themoviedb.org/3/person/'.$id.'?language=fr-FR')
         ->json();  
 
     //dump($acteurInfo);
@@ -83,12 +122,12 @@ public function acteur(Request $request){
         $items = new Paginator($currentPageItems, count($col), $perPage);
         $items->setPath($request->url());
         $items->appends($request->all());
-       
+              
     
         //dump($acteurFilm);
 
 
-    return View('movies.acteur', compact('acteurInfo','items'));
+    return View('movies.showActeur', compact('acteurInfo','items'));
 
 }
 

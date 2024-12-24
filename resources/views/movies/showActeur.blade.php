@@ -65,62 +65,78 @@
     </div>
 </nav>
 
+<main>
+
+<div class="container mt-4 mb-2">
+  <div class="row text-center align-items-center t-20">
+    <div class="col mb-2">
+        <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$acteurInfo['profile_path'] }} " >
+    </div>
+    <div class="col align-items-center mb-2">
+        <h2 class="card-header mb-2"> {{ $acteurInfo['name'] }}</h2>
+                <div class="card-header text-white bg-primary mt-4">
+                      Biographie
+                    
+                    </div>
+                    <div class="card" >
+                        <p>{{ $acteurInfo['biography'] }}</p>
+                        
+                    </div>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+<section class="bg-light py-4 my-5">
+    <div class="container ">
+        <div class="row equal-height-row d-flex flex-wrap">
+            <div class="col-12 d-flex flex-column justify-content-between">
+                <h2 class="mb-3 text-primary">Principaux films</h2>
+            </div>
+          @foreach($items as $film)
+            <div class="col-md-6 col-lg-3 row equal-height-row 
+                    d-flex flex-wrap mb-2 bg-image hover-zoom">
+                <div class="card my-6 bg-image hover-zoom">
+                  <a class="opacity-50-hover" href="{{ route('movies.show',$film['id']) }}" >
+                    <center><img class="zoom" src="{{ 'https://image.tmdb.org/t/p/w185/'.$film['poster_path'] }}"  alt="thumbnail"></center>
+                  </a>
+                    <div class="card-body">
+                    @isset($film['original_title'])
+                        <h6 class="card-title"><a href="{{ route('movies.show',$film['id']) }}" class="text-secondary">{{ $film['original_title'] }}</a></h6>
+                    @else
+                      <h6 class="card-title"><a href="{{ route('movies.show',$film['id']) }}" class="text-secondary">{{ $film['original_name'] }}</a></h6>
+                    @endif
+                      </div>
+                </div>
+            </div>
+          @endforeach
+        </div>
+        {{ $items->links() }}
+     </div>
+</section>
+
+
+</main>
 
 
   
 
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
-      @if (count($popularMovies)== 0)
-        <h4>Aucun résultat trouvé</h4></p>
-      @else
-        <h4>Films les plus populaires</h4></p>
-      @endif
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      @foreach($popularMovies as $movie)  
-      <div class="col">
-          <div class="card shadow-sm">
-          <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
-            <div class="card-body lh-sm">
-            
-              <p class="card-text lh-sm">
-                <a href="{{ route('movies.show',$movie['id']) }}">
-                  <strong>{{ $movie['title'] }}</strong>
-                </a>
-              </p>
-              @foreach($movie['genre_ids'] as $genre)
-                {{ $genres->get($genre) }}
-              @endforeach
-             
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                   <a href="{{ route('movies.show',$movie['id']) }}">
-                    View
-                   </a>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div>
-  </div>
 
-</main>
+
+
 
 <footer class="text-body-secondary py-5">
   <div class="container">
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
+   
   </div>
 </footer>
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
 </html>
