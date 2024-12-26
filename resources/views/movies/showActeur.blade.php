@@ -11,15 +11,30 @@
     <title>Hello, world!</title>
   
   <style>
-    .form-outline i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
-  
+#content {
+            
+            
+            margin: 0 auto;    
+            max-height: 310px;
+            overflow: hidden;   
+            
+        }#content.open {
+            max-height: 1200px;    
+        }
+        #show-more {
+            display: block;
+            cursor: pointer;
+            
+        }
+
+
+
   </style>
-    
+
+ 
+  
+
+
   </head>
   <body>
    
@@ -76,12 +91,53 @@
         <h2 class="card-header mb-2"> {{ $acteurInfo['name'] }}</h2>
                 <div class="card-header text-white bg-primary mt-4">
                       Biographie
-                    
+                     
                     </div>
-                    <div class="card" >
-                        <p>{{ $acteurInfo['biography'] }}</p>
+                    <div class="card border-0 mt-2" >
+                        <p id="pcontent" >{{ $acteurInfo['biography'] }}</p>
+                        <a id="show-more" href="#" class="mt-2 w-25">Read more</a>
                         
+
                     </div>
+
+                  
+    <script type="text/javascript">
+        
+        let box = document.getElementById('pcontent');
+        let para = document.getElementById('show-more');
+        let height = box.offsetHeight;
+        
+        if( height < 300){
+          para.remove();
+        }
+        else {
+          box.id = 'content';
+        }
+
+        var content = document.getElementById("content");
+        var button = document.getElementById("show-more");
+        
+        button.onclick = function () {
+        
+          if(content.className == "open"){
+            //shrink the box
+            content.className = "";
+            button.innerHTML = "Read more";
+          } else {
+            //expand the box
+            content.className = "open";
+            button.innerHTML = "Show less";
+          }
+        
+        };
+        
+        
+    </script>
+
+                 
+                  
+                      
+
 
     </div>
   </div>

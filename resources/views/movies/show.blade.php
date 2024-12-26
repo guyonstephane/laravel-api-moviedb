@@ -70,9 +70,13 @@
 <div class="container mt-4 mb-2">
   <div class="row text-center align-items-center t-20">
     <div class="col mb-2">
+    @if(isset($movie['id']))
         <img src="{{ 'https://image.tmdb.org/t/p/w342/'.$movie['poster_path'] }}" >
+        
+        
     </div>
     <div class="col align-items-center mb-2">
+      
         <h2 class="card-header mb-2"> {{ $movie['title'] }}</h2>
         {{ $movie['overview'] }}
         <div class="card-header text-white bg-primary mt-4">
@@ -87,7 +91,9 @@
                         @endforeach
                         </ul>
                     </div>
-
+    @else
+      <h2>Aucune information sur ce film</h2>
+     @endif
     </div>
   </div>
 </div>
@@ -102,6 +108,7 @@
                 <h2 class="mb-3 text-primary">Principaux acteurs</h2>
             </div>
           @foreach($items as $acteur)
+          @isset($acteur['profile_path'])
           <div class="col-md-6 col-lg-3">
                 <div class="card my-6">
 
@@ -114,6 +121,7 @@
                     </div>
                 </div>
             </div>
+            @endif
           @endforeach
           </div>
           {{ $items->links() }}
