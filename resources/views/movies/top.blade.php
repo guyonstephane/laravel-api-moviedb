@@ -36,21 +36,14 @@
     <div class="navbar-collapse collapse" id="collapsingNavbar3">
         <ul class="navbar-nav justify-content-center">
             <li class="nav-item active">
-              <a class="nav-link" href="/top">Top films</a>
+                <a class="nav-link" href="/top">Top films</a>
             </li>
-            <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Genre
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/genre?with_genres=878">Science Fiction</a></li>
-            <li><a class="dropdown-item" href="/genre?with_genres=28">Action</a></li>
-            <li><a class="dropdown-item" href="/genre?with_genres=12">Aventure</a></li>
-            <li><a class="dropdown-item" href="/genre?with_genres=37">Western</a></li>
-            <li><a class="dropdown-item" href="/genre?with_genres=36">Histoire</a></li>
-            <li><a class="dropdown-item" href="/genre?with_genres=35">Comédie</a></li>
-          </ul>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav w-100 justify-content-end">
           
@@ -72,38 +65,40 @@
     </div>
 </nav>
 
-    
+
+
+  
 
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
-      @if (count($popularMovies)== 0)
+      @if (count($topMovies)== 0)
         <h4>Aucun résultat trouvé</h4></p>
       @else
-        <h4>Films les plus populaires</h4></p>
+        <h4>Films les mieux notés</h4></p>
       @endif
-      <div class="d-flex row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-      @foreach($popularMovies as $movie)  
-      <div class="col d-flex">
-          <div class="card shadow-sm ">
-            <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
-        
-            <div class="card-body lh-sm d-flex flex-column">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      @foreach($topMovies as $movie)  
+      <div class="col">
+          <div class="card shadow-sm">
+          <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
+            <div class="card-body lh-sm">
             
-              <p class="card-text lh-sm">
-                <a href="{{ route('movies.show',$movie['id']) }}">
+              <p class="card-text lh-sm ">
+                <a class="me-2" href="{{ route('movies.show',$movie['id']) }}">
                   <strong>{{ $movie['title'] }}</strong>
-                </a>
+                </a>{{ date('d F Y',strtotime($movie['release_date'])) }}
+                
               </p>
-              @foreach($movie['genre_ids'] as $genre)
-                {{ $genres->get($genre).", " }}
-              @endforeach
-             
               
-                  <a href="{{ route('movies.show',$movie['id']) }}" class="btn btn-sm btn-outline-primary mt-auto">
+              <div class="d-flex justify-content- align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                   <a href="{{ route('movies.show',$movie['id']) }}">
                     View
                    </a>
-                  
-               
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

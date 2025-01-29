@@ -154,7 +154,40 @@ public function showActeur( Request $request,$id){
 
 }
 
+public function topRated() {
 
+    $topMovies = Http::withToken(config('services.tmdb.token'))
+    ->get('https://api.themoviedb.org/3/movie/top_rated?language=fr-FR')
+    ->json()['results'];
+    
+    dump($topMovies);
+
+     
+    
+    return view('movies.top', compact('topMovies'));
+}
+
+public function genres(Request $request) {
+
+    if (isset($request->with_genres) & !empty($request->get('with_genres')))
+    {
+        $word = $request->get('with_genres');
+        $topMovies = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/movie?with_genres='.$word)
+        ->json()['results'];
+    
+       
+    }
+
+    else
+    {
+        $topMovies = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/movie/popular?language=fr-FR')
+            ->json()['results'];
+    }
+    
+    return view('movies.genre', compact('topMovies'));
+}
 
 
 }

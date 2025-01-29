@@ -72,38 +72,40 @@
     </div>
 </nav>
 
-    
+
+
+  
 
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
-      @if (count($popularMovies)== 0)
+      @if (count($topMovies)== 0)
         <h4>Aucun résultat trouvé</h4></p>
       @else
         <h4>Films les plus populaires</h4></p>
       @endif
-      <div class="d-flex row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-      @foreach($popularMovies as $movie)  
-      <div class="col d-flex">
-          <div class="card shadow-sm ">
-            <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
-        
-            <div class="card-body lh-sm d-flex flex-column">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      @foreach($topMovies as $movie)  
+      <div class="col">
+          <div class="card shadow-sm">
+          <img src="{{ 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] }}" >
+            <div class="card-body lh-sm">
             
               <p class="card-text lh-sm">
                 <a href="{{ route('movies.show',$movie['id']) }}">
                   <strong>{{ $movie['title'] }}</strong>
                 </a>
               </p>
-              @foreach($movie['genre_ids'] as $genre)
-                {{ $genres->get($genre).", " }}
-              @endforeach
-             
               
-                  <a href="{{ route('movies.show',$movie['id']) }}" class="btn btn-sm btn-outline-primary mt-auto">
+             
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                   <a href="{{ route('movies.show',$movie['id']) }}">
                     View
                    </a>
-                  
-               
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
